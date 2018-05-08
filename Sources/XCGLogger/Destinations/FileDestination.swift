@@ -113,7 +113,7 @@ open class FileDestination: BaseQueuedDestination {
             }
         }
         catch let error as NSError {
-            owner._logln("Attempt to open log file for \(fileExists && shouldAppend ? "appending" : "writing") failed: \(error.localizedDescription)", level: .error, source: self)
+            print("Attempt to open log file for \(fileExists && shouldAppend ? "appending" : "writing") failed: \(error.localizedDescription)")
             logFileHandle = nil
             return
         }
@@ -197,7 +197,7 @@ open class FileDestination: BaseQueuedDestination {
             }
             catch let error as NSError {
                 openFile()
-                owner?._logln("Unable to rotate file \(writeToFileURL.path) to \(archiveToFileURL.path): \(error.localizedDescription)", level: .error, source: self)
+                print("Unable to rotate file \(writeToFileURL.path) to \(archiveToFileURL.path): \(error.localizedDescription)")
                 closure?(false)
                 return false
             }
@@ -211,10 +211,10 @@ open class FileDestination: BaseQueuedDestination {
                 }
             }
             catch let error as NSError {
-                owner?._logln("Unable to set extended file attributes on file \(archiveToFileURL.path): \(error.localizedDescription)", level: .error, source: self)
+                print("Unable to set extended file attributes on file \(archiveToFileURL.path): \(error.localizedDescription)")
             }
 
-            owner?._logln("Rotated file \(writeToFileURL.path) to \(archiveToFileURL.path)", level: .info, source: self)
+            print("Rotated file \(writeToFileURL.path) to \(archiveToFileURL.path)")
             openFile()
             closure?(true)
             return true
