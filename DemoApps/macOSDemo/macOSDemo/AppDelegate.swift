@@ -35,7 +35,8 @@ let log: XCGLogger = {
     let logPath: String = "/tmp/XCGLogger_macOSDemo.log"
     let autoRotatingFileDestination = AutoRotatingFileDestination(writeToFile: logPath, identifier: "advancedLogger.fileDestination", shouldAppend: true,
                                                                   maxFileSize: 1024 * 5, // 5k, not a good size for production (default is 1 megabyte)
-                                                                  maxTimeInterval: 60) // 1 minute, also not good for production (default is 10 minutes)
+                                                                  maxTimeInterval: 60, // 1 minute, also not good for production (default is 10 minutes)
+                                                                  targetMaxLogFiles: 20) // Default is 10, max is 255
 
     // Optionally set some configuration options
     autoRotatingFileDestination.outputLevel = .debug
@@ -46,7 +47,6 @@ let log: XCGLogger = {
     autoRotatingFileDestination.showFileName = true
     autoRotatingFileDestination.showLineNumber = true
     autoRotatingFileDestination.showDate = true
-    autoRotatingFileDestination.targetMaxLogFiles = 10 // probably good for this demo and production, (default is 10, max is 255)
 
     // Process this destination in the background
     autoRotatingFileDestination.logQueue = XCGLogger.logQueue
@@ -56,9 +56,12 @@ let log: XCGLogger = {
     ansiColorLogFormatter.colorize(level: .verbose, with: .colorIndex(number: 244), options: [.faint])
     ansiColorLogFormatter.colorize(level: .debug, with: .black)
     ansiColorLogFormatter.colorize(level: .info, with: .blue, options: [.underline])
+    ansiColorLogFormatter.colorize(level: .notice, with: .green, options: [.italic])
     ansiColorLogFormatter.colorize(level: .warning, with: .red, options: [.faint])
     ansiColorLogFormatter.colorize(level: .error, with: .red, options: [.bold])
     ansiColorLogFormatter.colorize(level: .severe, with: .white, on: .red)
+    ansiColorLogFormatter.colorize(level: .alert, with: .white, on: .red, options: [.bold])
+    ansiColorLogFormatter.colorize(level: .emergency, with: .white, on: .red, options: [.bold, .blink])
     autoRotatingFileDestination.formatters = [ansiColorLogFormatter]
 
     // Add the destination to the logger
