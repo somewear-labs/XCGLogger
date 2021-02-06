@@ -121,7 +121,15 @@ open class FileDestination: BaseQueuedDestination {
         owner.logAppDetails(selectedDestination: self)
 
         let logDetails = LogDetails(level: .info, date: Date(), message: "XCGLogger " + (fileExists && shouldAppend ? "appending" : "writing") + " log to: " + writeToFileURL.absoluteString, functionName: "", fileName: "", lineNumber: 0, userInfo: XCGLogger.Constants.internalUserInfo)
-        owner._logln(logDetails.message, level: logDetails.level, source: self)
+        
+        // Added for crash: https://console.firebase.google.com/u/0/project/somewear-souvla/crashlytics/app/ios:com.somewearlabs.sw/issues/a01c768954f2b0be914b1ffa036e33b3
+        do {
+            owner._logln(logDetails.message, level: logDetails.level, source: self)
+        } catch {
+            print("could not open log file: \(error.localizedDescription)")
+            return
+        }
+        
         if owner.destination(withIdentifier: identifier) == nil {
             processInternal(logDetails: logDetails)
         }
