@@ -30,21 +30,17 @@ public struct LogDetails {
 
     /// The line number that generated this log
     public var lineNumber: Int
-    
-    /// The threadName that generated this log
-    public var threadName: String
 
     /// Dictionary to store miscellaneous data about the log, can be used by formatters and filters etc. Please prefix any keys to help avoid collissions.
     public var userInfo: [String: Any]
 
-    public init(level: XCGLogger.Level, date: Date, message: String, functionName: String, fileName: String, lineNumber: Int, threadName: String = "", userInfo: [String: Any] = [:]) {
+    public init(level: XCGLogger.Level, date: Date, message: String, functionName: String, fileName: String, lineNumber: Int, userInfo: [String: Any] = [:]) {
         self.level = level
         self.date = date
         self.message = message
         self.functionName = functionName
         self.fileName = fileName
         self.lineNumber = lineNumber
-        self.threadName = threadName
         self.userInfo = userInfo
     }
 }

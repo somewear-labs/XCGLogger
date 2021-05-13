@@ -76,7 +76,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     ///
     /// - Returns:  Nothing
     ///
-    open func process(logDetails: inout LogDetails) {
+    open func process(logDetails: LogDetails) {
         guard let owner = owner else { return }
 
         var extendedDetails: String = ""
@@ -92,24 +92,20 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         if showLogIdentifier {
             extendedDetails += "[\(owner.identifier)] "
         }
-        
+
         if showThreadName {
             if Thread.isMainThread {
-//                extendedDetails += "[main] "
-                logDetails.threadName = "main"
+                extendedDetails += "[main] "
             }
             else {
                 if let threadName = Thread.current.name, !threadName.isEmpty {
-//                    extendedDetails += "[\(threadName)] "
-                    logDetails.threadName = threadName
+                    extendedDetails += "[\(threadName)] "
                 }
                 else if let queueName = DispatchQueue.currentQueueLabel, !queueName.isEmpty {
-//                    extendedDetails += "[\(queueName)] "
-                    logDetails.threadName = queueName
+                    extendedDetails += "[\(queueName)] "
                 }
                 else {
-//                    extendedDetails += String(format: "[%p] ", Thread.current)
-                    logDetails.threadName = Thread.current.name ?? "missing name"
+                    extendedDetails += String(format: "[%p] ", Thread.current)
                 }
             }
         }
@@ -182,8 +178,4 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
         // Do something with the text in an overridden version of this method
         precondition(false, "Must override this")
     }
-}
-
-public class UserInfoKey {
-   static let threadName = "threadName"
 }

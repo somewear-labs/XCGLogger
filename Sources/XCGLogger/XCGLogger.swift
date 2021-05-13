@@ -340,9 +340,9 @@ open class XCGLogger: CustomDebugStringConvertible {
         guard enabledDestinations.count > 0 else { return }
         guard let closureResult = closure() else { return }
 
-        var logDetails: LogDetails = LogDetails(level: level, date: Date(), message: String(describing: closureResult), functionName: functionName, fileName: fileName, lineNumber: lineNumber, userInfo: userInfo)
+        let logDetails: LogDetails = LogDetails(level: level, date: Date(), message: String(describing: closureResult), functionName: functionName, fileName: fileName, lineNumber: lineNumber, userInfo: userInfo)
         for destination in enabledDestinations {
-            destination.process(logDetails: &logDetails)
+            destination.process(logDetails: logDetails)
         }
     }
 

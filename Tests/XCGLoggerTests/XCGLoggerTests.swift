@@ -395,8 +395,8 @@ class XCGLoggerTests: XCTestCase {
 
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 1, "Fail: Didn't correctly load all of the expected log messages")
 
-        var knownLogDetails = LogDetails(level: .debug, date: knownDate, message: message, functionName: #function, fileName: #file, lineNumber: #line)
-        testDestination.process(logDetails: &knownLogDetails)
+        let knownLogDetails = LogDetails(level: .debug, date: knownDate, message: message, functionName: #function, fileName: #file, lineNumber: #line)
+        testDestination.process(logDetails: knownLogDetails)
 
         XCTAssert(testDestination.remainingNumberOfExpectedLogMessages == 0, "Fail: Didn't receive all expected log lines")
         XCTAssert(testDestination.numberOfUnexpectedLogMessages == 0, "Fail: Received an unexpected log line")
