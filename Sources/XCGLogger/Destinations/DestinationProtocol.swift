@@ -37,7 +37,7 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     ///
     /// - Returns:  Nothing
     ///
-    func process(logDetails: LogDetails)
+    func process(logDetails: inout LogDetails)
 
     /// Process the log details (internal use, same as processLogDetails but omits function/file/line info).
     ///
