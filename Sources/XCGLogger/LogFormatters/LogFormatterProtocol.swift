@@ -19,5 +19,5 @@ public protocol LogFormatterProtocol: CustomDebugStringConvertible {
     ///
     /// - Returns:  Nothing
     ///
-    @discardableResult func format(logDetails: inout LogDetails, message: inout String) -> String
+    @discardableResult func format(logDetails: inout LogDetails, threadName: String, message: inout String) -> String
 }

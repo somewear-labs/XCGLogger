@@ -20,7 +20,7 @@ open class Base64LogFormatter: LogFormatterProtocol, CustomDebugStringConvertibl
     ///
     /// - Returns:  message with the additional formatting
     ///
-    @discardableResult open func format(logDetails: inout LogDetails, message: inout String) -> String {
+    @discardableResult open func format(logDetails: inout LogDetails, threadName: String, message: inout String) -> String {
         guard let utf8Message = message.data(using: .utf8) else { return message }
 
         message = utf8Message.base64EncodedString()

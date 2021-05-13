@@ -81,7 +81,7 @@ open class PrePostFixLogFormatter: LogFormatterProtocol, CustomDebugStringConver
     ///
     /// - Returns:  message with the additional formatting
     ///
-    @discardableResult open func format(logDetails: inout LogDetails, message: inout String) -> String {
+    @discardableResult open func format(logDetails: inout LogDetails, threadName: String, message: inout String) -> String {
         message = "\(prefixStrings[logDetails.level] ?? "")\(message)\(postfixStrings[logDetails.level] ?? "")"
         return message
     }

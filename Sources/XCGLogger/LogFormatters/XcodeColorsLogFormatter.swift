@@ -238,7 +238,7 @@ open class XcodeColorsLogFormatter: LogFormatterProtocol, CustomDebugStringConve
     ///
     /// - Returns:  message with the additional formatting
     ///
-    @discardableResult open func format(logDetails: inout LogDetails, message: inout String) -> String {
+    @discardableResult open func format(logDetails: inout LogDetails, threadName: String, message: inout String) -> String {
         message = "\(formatString(for: logDetails.level))\(message)\(XcodeColorsLogFormatter.reset)"
         return message
     }

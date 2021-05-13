@@ -95,7 +95,7 @@ open class TestDestination: BaseQueuedDestination {
                 return
             }
             
-            applyFormatters(logDetails: &logDetails, message: &message)
+            applyFormatters(logDetails: &logDetails, threadName: threadName, message: &message)
 
             let index = expectedLogMessages.firstIndex(of: message)
             if let index = index {

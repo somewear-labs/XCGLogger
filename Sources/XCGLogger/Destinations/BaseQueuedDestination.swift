@@ -37,7 +37,7 @@ open class BaseQueuedDestination: BaseDestination {
             // Apply filters, if any indicate we should drop the message, we abort before doing the actual logging
             guard !self.shouldExclude(logDetails: &logDetails, message: &message) else { return }
 
-            self.applyFormatters(logDetails: &logDetails, message: &message)
+            self.applyFormatters(logDetails: &logDetails, threadName: threadName, message: &message)
             self.write(message: message)
         }
 

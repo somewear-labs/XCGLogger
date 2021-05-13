@@ -79,7 +79,7 @@ public protocol DestinationProtocol: CustomDebugStringConvertible {
     ///
     /// - Returns:  Nothing
     ///
-    func applyFormatters(logDetails: inout LogDetails, message: inout String)
+    func applyFormatters(logDetails: inout LogDetails, threadName: String, message: inout String)
 }
 
 extension DestinationProtocol {
@@ -114,11 +114,11 @@ extension DestinationProtocol {
     ///
     /// - Returns:  Nothing
     ///
-    public func applyFormatters(logDetails: inout LogDetails, message: inout String) {
+    public func applyFormatters(logDetails: inout LogDetails, threadName: String, message: inout String) {
         guard let formatters = self.formatters ?? self.owner?.formatters, formatters.count > 0 else { return }
 
         for formatter in formatters {
-            formatter.format(logDetails: &logDetails, message: &message)
+            formatter.format(logDetails: &logDetails, threadName: threadName, message: &message)
         }
     }
 }
