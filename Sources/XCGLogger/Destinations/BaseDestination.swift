@@ -93,19 +93,23 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
             extendedDetails += "[\(owner.identifier)] "
         }
 
+        var threadDescription = ""
         if showThreadName {
             if Thread.isMainThread {
-                extendedDetails += "[main] "
-            }
-            else {
+//                extendedDetails += "[main] "
+                threadDescription = Thread.mainThreadName
+            } else {
                 if let threadName = Thread.current.name, !threadName.isEmpty {
-                    extendedDetails += "[\(threadName)] "
+//                    extendedDetails += "[\(threadName)] "
+                    threadDescription = threadName
                 }
                 else if let queueName = DispatchQueue.currentQueueLabel, !queueName.isEmpty {
-                    extendedDetails += "[\(queueName)] "
+//                    extendedDetails += "[\(queueName)] "
+                    threadDescription = queueName
                 }
                 else {
-                    extendedDetails += String(format: "[%p] ", Thread.current)
+//                    extendedDetails += String(format: "[%p] ", Thread.current)
+                    threadDescription = Thread.current.name ?? "missing thread name"
                 }
             }
         }
@@ -121,7 +125,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
             extendedDetails += "\(logDetails.functionName) "
         }
 
-        output(logDetails: logDetails, message: "\(extendedDetails)> \(logDetails.message)")
+        output(logDetails: logDetails, threadName: threadDescription, message: "\(extendedDetails)> \(logDetails.message)")
     }
 
     /// Process the log details (internal use, same as process(logDetails:) but omits function/file/line info).
@@ -148,7 +152,7 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
             extendedDetails += "[\(owner.identifier)] "
         }
 
-        output(logDetails: logDetails, message: "\(extendedDetails)> \(logDetails.message)")
+        output(logDetails: logDetails, threadName: "", message: "\(extendedDetails)> \(logDetails.message)")
     }
 
     // MARK: - Misc methods
@@ -174,8 +178,14 @@ open class BaseDestination: DestinationProtocol, CustomDebugStringConvertible {
     ///
     /// - Returns:  Nothing
     ///
-    open func output(logDetails: LogDetails, message: String) {
+    open func output(logDetails: LogDetails, threadName: String, message: String) {
         // Do something with the text in an overridden version of this method
         precondition(false, "Must override this")
+    }
+}
+
+extension Thread {
+    static var mainThreadName: String {
+        return "main"
     }
 }

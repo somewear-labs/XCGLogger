@@ -28,7 +28,7 @@ open class BaseQueuedDestination: BaseDestination {
     ///
     /// - Returns:  Nothing
     ///
-    open override func output(logDetails: LogDetails, message: String) {
+    open override func output(logDetails: LogDetails, threadName: String, message: String) {
         let outputClosure = {
             // Create mutable versions of our parameters
             var logDetails = logDetails

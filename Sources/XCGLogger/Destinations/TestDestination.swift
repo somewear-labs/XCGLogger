@@ -85,7 +85,7 @@ open class TestDestination: BaseQueuedDestination {
     ///
     /// - Returns:  Nothing
     ///
-    open override func output(logDetails: LogDetails, message: String) {
+    open override func output(logDetails: LogDetails, threadName: String, message: String) {
         sync {
             var logDetails = logDetails
             var message = message
